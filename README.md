@@ -4,6 +4,8 @@ An alternative frontend for [Burner](https://burner.pro) hardware wallets
 
 still in early development, moreso prototyping around viem+burner
 
+![frontend image](ethra1n.jpg)
+
 
 ## running it
 
