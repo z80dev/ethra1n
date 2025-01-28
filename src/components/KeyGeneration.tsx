@@ -1,5 +1,7 @@
 import { useGenerateKey, } from '../hooks';
 
+// TODO: This file has been updated as needed depending on what slot im interacting with
+// some slots have mandatory password, some dont support passwords. Not ready for public use yet
 export function KeyGeneration() {
   const { state, generate, isLoading } = useGenerateKey();
 

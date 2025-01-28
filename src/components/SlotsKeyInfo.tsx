@@ -28,7 +28,6 @@ export const SlotsKeyInfo = ({ slots, onRefresh }: SlotsKeyInfoProps) => {
 
       <div className="space-y-6">
         {slots.map(({ slotId, publicKey, address: paramAddress }) => {
-          const hasKey = typeof publicKey === 'string';
           const address = paramAddress ?? computeAddress('0x' + publicKey) ?? "N/A";
 
           return (

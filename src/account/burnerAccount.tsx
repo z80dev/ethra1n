@@ -1,8 +1,7 @@
 import { toAccount } from 'viem/accounts';
-import { Account, Hex, keccak256, serializeTransaction, SerializeTransactionFn, SignableMessage, SignTransactionParameters, SignTransactionReturnType, TransactionSerializable, TypedData, TypedDataDefinition } from 'viem';
+import { Account, Hex, SignableMessage, TypedData, TypedDataDefinition } from 'viem';
 import { sign } from '../commands';
 import { signTransaction } from './signTransaction';
-
 import { PasswordPrompt } from '../components/PasswordPrompt';
 import { createRoot } from 'react-dom/client'
 import { GetKeyInfoResponse } from '../hooks/useGetKeyInfo';
@@ -112,7 +111,7 @@ export async function slotNumberToAccount(slotNumber: number, address?: AddressS
   }
 
   const account = {
-    address: fetchedAddress,
+    address: fetchedAddress!,
     signMessage,
     signTypedData,
     async signTransaction(transaction, { serializer } = {}) {
