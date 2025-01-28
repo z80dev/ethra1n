@@ -3,7 +3,7 @@ import { useSlotAccount } from './account/burnerAccount.tsx';
 import SlotSelector from './components/SlotSelector.tsx';
 import { useState } from 'react';
 import { createWalletClient, http, parseEther } from 'viem'
-import { ink } from 'viem/chains'
+import { base, ink, Chain } from 'viem/chains'
 
 function App() {
     const [selectedSlot, setSelectedSlot] = useState(0);
@@ -11,12 +11,13 @@ function App() {
     const [amount, setAmount] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [isSending, setIsSending] = useState(false);
+    const [network, setNetwork] = useState<Chain>(ink);
 
     const { account, isConnected } = useSlotAccount(selectedSlot);
     const address = isConnected ? account?.address : undefined;
 
     const client = createWalletClient({
-        chain: ink,
+        chain: network,
         transport: http()
     });
 
@@ -56,6 +57,14 @@ function App() {
         ? [{ slotId: selectedSlot, address: address }]
         : (error ? [{ slotId: selectedSlot, address: JSON.stringify(error) }] : []);
 
+    const switchToInk = () => {
+        setNetwork(ink);
+    }
+
+    const switchToBase = () => {
+        setNetwork(base);
+    }
+
     return (
         <div className="p-4 max-w-md mx-auto">
             <SlotSelector
@@ -66,6 +75,29 @@ function App() {
             <SlotsKeyInfo slots={slots} />
 
             <div className="mt-4 space-y-4">
+                <div>
+                    <h2 className="text-lg font-semibold">Send Transaction</h2>
+                    <p className="text-sm text-gray-500">
+                        Send ETH to another address
+                    </p>
+                    <p>
+                        Network: {network.name}
+                    </p>
+                    <button
+                        onClick={switchToInk}
+                        disabled={network === ink}
+                        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                    >
+                        Switch to Ink
+                    </button>
+                    <button
+                        onClick={switchToBase}
+                        disabled={network === base}
+                        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                    >
+                        Switch to Base
+                    </button>
+                </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                         Recipient Address
